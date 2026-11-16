@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nano Notes — offline-first notes with hybrid AI</title>
+  <meta name="description" content="Nano Notes: an offline-first notes app. Summaries run on-device with Gemini Nano via Firebase AI Logic, with a cloud fallback for long documents." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">✦</span>
+      <div>
+        <h1>Nano Notes</h1>
+        <p class="tagline">Offline-first notes · summaries on-device, cloud when it matters</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <span id="engineStatus" class="pill">Checking AI…</span>
+      <button id="btnNew" class="btn btn-primary">＋ New note</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <input id="searchInput" type="search" placeholder="Search notes…" aria-label="Search notes" />
+      <div id="noteCount" class="note-count"></div>
+      <ul id="noteList" class="note-list"></ul>
+      <details class="howto">
+        <summary>How the hybrid AI works</summary>
+        <p>Press <strong>Summarize</strong> and the app tries, in order:</p>
+        <ol>
+          <li><strong>On-device</strong> — Gemini Nano in Chrome, via Firebase AI Logic. Private, free, works offline.</li>
+          <li><strong>Cloud</strong> — Gemini 2.5 Flash via Firebase AI Logic, used automatically for long documents or when the device model is unavailable.</li>
+          <li><strong>Extractive fallback</strong> — a local sentence extractor, clearly labelled, when no model is available at all. This is not AI output.</li>
+        </ol>
+        <p>The badge next to every summary tells you which engine produced it. Nothing is ever presented as AI when it is not.</p>
+        <p id="firebaseState">Firebase: checking…</p>
+        <p id="engineLine" class="engine-line"></p>
+      </details>
+    </aside>
+
+    <section class="editor">
+      <input id="noteTitle" type="text" placeholder="Note title…" aria-label="Note title" />
+      <div id="metaLine" class="meta-line">Select a note or create a new one.</div>
+      <textarea id="noteBody" placeholder="Write or paste your note here…" aria-label="Note body"></textarea>
+      <div class="editor-footer">
+        <span id="counts" class="counts"></span>
+        <button id="btnDelete" class="btn btn-danger">Delete note</button>
+      </div>
+
+      <div class="ai-panel">
+        <div class="ai-actions">
+          <button id="btnSummarize" class="btn btn-ai">✦ Summarize</button>
+          <button id="btnKeyPoints" class="btn btn-ai">☰ Key points</button>
+        </div>
+        <div id="aiProgress" class="progress hidden" aria-live="polite">
+          <div class="progress-track"><div id="aiBarFill" class="progress-fill" style="width: 0%"></div></div>
+          <span id="aiStatus" class="ai-status"></span>
+        </div>
+        <div id="summaryBox" class="summary-box hidden">
+          <div class="summary-head">
+            <span id="summaryBadge" class="badge"></span>
+            <span class="summary-tools">
+              <button id="btnCopySummary" class="btn btn-small">Copy</button>
+              <button id="btnClearSummary" class="btn btn-small">Clear</button>
+            </span>
+          </div>
+          <div id="summaryText" class="summary-text"></div>
+          <div id="summaryMeta" class="summary-meta"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    Notes are stored locally in your browser (IndexedDB) — no account, no server.
+    On-device AI needs Chrome 139+ on desktop with Gemini Nano downloaded.
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
