@@ -1,0 +1,11 @@
+# Firebase web config (contains your project's API key — never commit it)
+firebase-config.js
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies (only if you ever add a build step)
+node_modules/
